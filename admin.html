@@ -104,7 +104,11 @@ const tg = window.Telegram && Telegram.WebApp;
 if (tg) tg.ready();
 if (tg) tg.expand();
 
-const API = window.location.origin;
+const API = (() => {
+  const p = new URLSearchParams(location.search).get('api');
+  if (p) return p.replace(/\/+$/, '');
+  return location.origin;
+})();
 const initData = tg ? tg.initData : '';
 
 const WD = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
